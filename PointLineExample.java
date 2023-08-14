@@ -6,6 +6,11 @@ class Point{
         System.out.println("x-> " + x);
         System.out.println("y-> " + y);
     } 
+
+    void move(float theX, float theY){
+        x = theX;
+        y = theY;
+    }
 }
 
 class Line{
@@ -25,12 +30,9 @@ public class PointLineExample {
         first.start = new Point();
         first.end = new Point();
 
-        first.start.x = 3.0f;
-        first.start.y = 7.37f;
-
-        first.end.x = 92.9f;
-        first.end.y = 77.78f;
-
+        first.start.move(3.0f, 7.37f);
+        first.end.move(92.9f, 77.78f);
+       
         first.printLine();
     }
 }
