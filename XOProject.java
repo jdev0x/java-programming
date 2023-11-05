@@ -53,17 +53,42 @@ class XOBoard{
         this.rows[1] = new XORow();
         this.rows[2] = new XORow();
     }
+
+    public XORow [] getRows(){
+        return this.rows;
+        
+    }
+
+    public void setCellValue(int row, int column, XOValue value){
+        this.rows[row].setCellValue(column, value);
+    }
 }
 
 public class XOProject {
     public static void main(String[] args) {
-        XOCell cell = new XOCell();
-        cell.setValue(XOValue.X);
-        System.out.println(cell.getValue());
+        // XOValue val = XOValue.EMPTY;
+        
+        // XOCell cell = new XOCell();
+        // cell.setValue(XOValue.X);
+        // System.out.println(cell.getValue());
 
-        XORow row = new XORow();
-        row.setCellValue(0, XOValue.X);
-        row.setCellValue(1, XOValue.O);
-        row.setCellValue(2, XOValue.X);
+        // XORow row = new XORow();
+        // row.setCellValue(0, XOValue.X);
+        // row.setCellValue(1, XOValue.O);
+        // row.setCellValue(2, XOValue.X);
+
+        XOBoard board = new XOBoard();
+        board.setCellValue(0, 0, XOValue.X);
+        board.setCellValue(0, 1, XOValue.O);
+        board.setCellValue(0, 2, XOValue.X);
+
+        board.setCellValue(1, 0, XOValue.O);
+        board.setCellValue(1, 1, XOValue.X);
+        board.setCellValue(1, 2, XOValue.O);
+
+        board.setCellValue(2, 0, XOValue.X);
+        board.setCellValue(2, 1, XOValue.O);
+        board.setCellValue(2, 2, XOValue.O);
+
     }
 }
