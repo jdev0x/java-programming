@@ -20,6 +20,15 @@ class XOCell {
     public XOValue getValue(){
         return this.value;
     }
+
+    public boolean isX(){
+        return this.value == XOValue.X;
+    }
+
+    public boolean isO(){
+        return this.value == XOValue.O;
+    }
+
 }
 
 class XORow {
@@ -41,6 +50,13 @@ class XORow {
         this.columns[index].setValue(value);
     }
 
+    public boolean isX(){
+        return this.columns[0].isX() && this.columns[1].isX() && this.columns[2].isX();
+    }
+
+    public boolean isO(){
+        return this.columns[0].isO() && this.columns[1].isO() && this.columns[2].isO();
+    }
 }
 
 class XOBoard{
@@ -56,27 +72,79 @@ class XOBoard{
 
     public XORow [] getRows(){
         return this.rows;
-        
     }
-
+    
     public void setCellValue(int row, int column, XOValue value){
         this.rows[row].setCellValue(column, value);
     }
+
+    protected  boolean isColX(int index){
+        return this.rows[0].getColumns()[index].isX() && 
+               this.rows[1].getColumns()[index].isX() &&
+               this.rows[2].getColumns()[index].isX();
+    }
+
+    protected boolean isColO(int index){
+        return this.rows[0].getColumns()[index].isO() &&
+               this.rows[1].getColumns()[index].isO() &&
+               this.rows[2].getColumns()[index].isO();
+    }
+
+    protected boolean isCrossX(){
+        boolean isCross = this.rows[0].getColumns()[0].isX() && 
+               this.rows[1].getColumns()[1].isX() &&
+               this.rows[2].getColumns()[2].isX();
+        
+        if(!isCross){
+            isCross = this.rows[0].getColumns()[2].isX() &&
+            this.rows[1].getColumns()[1].isX() &&
+            this.rows[2].getColumns()[0].isX();
+        }
+
+        return isCross;
+    }
+
+    protected boolean isCrossO(){
+        boolean isCross = this.rows[0].getColumns()[0].isO() &&
+        this.rows[1].getColumns()[1].isO() &&
+        this.rows[2].getColumns()[2].isO();
+
+        if(!isCross){
+            isCross = this.rows[0].getColumns()[2].isO() &&
+                      this.rows[1].getColumns()[1].isO() &&
+                      this.rows[2].getColumns()[0].isO();
+        }
+
+        return isCross;
+    }
+
+    protected boolean isRowX(){
+        return this.rows[0].isX() || this.rows[1].isX() || this.rows[2].isX();
+    }
+
+    protected boolean isRowO(){
+        return this.rows[0].isO() || this.rows[1].isO() || this.rows[2].isO();
+    }
+
+    public boolean isX(){
+        return this.isColX(0) || this.isColX(1) || this.isColX(2) ||
+               this.isRowX() || this.isCrossX();
+    }
+
+    public boolean isO(){
+        return this.isColO(0) || this.isColO(1) || this.isColO(2) ||
+               this.isRowO() || this.isCrossO();
+    }
+
+    public boolean check(){
+        return this.isX() || this.isO();
+    }
+
 }
 
 public class XOProject {
     public static void main(String[] args) {
-        // XOValue val = XOValue.EMPTY;
         
-        // XOCell cell = new XOCell();
-        // cell.setValue(XOValue.X);
-        // System.out.println(cell.getValue());
-
-        // XORow row = new XORow();
-        // row.setCellValue(0, XOValue.X);
-        // row.setCellValue(1, XOValue.O);
-        // row.setCellValue(2, XOValue.X);
-
         XOBoard board = new XOBoard();
         board.setCellValue(0, 0, XOValue.X);
         board.setCellValue(0, 1, XOValue.O);
@@ -89,6 +157,8 @@ public class XOProject {
         board.setCellValue(2, 0, XOValue.X);
         board.setCellValue(2, 1, XOValue.O);
         board.setCellValue(2, 2, XOValue.O);
+
+        System.out.println(board.check());
 
     }
 }
